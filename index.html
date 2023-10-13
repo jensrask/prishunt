@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PrisHuntGPT</title>
+</head>
+<body>
+  <h1>PrisHuntGPT Chat</h1>
+  <div id="chat-box"></div>
+  <input type="text" id="user-input" />
+  <button onclick="sendMessage()">Send</button>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    function sendMessage() {
+  const message = $('#user-input').val();
+  $('#chat-box').append(`<div>User: ${message}</div>`);
+  $.ajax({
+    url: 'http://127.0.0.1:5000/ask',
+    type: 'POST',
+    contentType: 'application/json',
+    data: JSON.stringify({ message: message }),
+    dataType: 'json',
+    success: function(data) {
+      $('#chat-box').append(`<div>Bot: ${data.message}</div>`);
+    }
+  });
+  $('#user-input').val('');
+}
+  </script>
+</body>
+</html>
